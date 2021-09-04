@@ -4,8 +4,16 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final List<String> favcompany = ["g", "a", "s", "m", "f"];
+  String selectedComp = "g";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,9 +27,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class layout extends StatelessWidget {
+class layout extends StatefulWidget {
   const layout({Key? key}) : super(key: key);
 
+  @override
+  _layoutState createState() => _layoutState();
+}
+
+class _layoutState extends State<layout> {
+  int selectedValue = 1;
+  int myvalue = 1;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,42 +53,76 @@ class layout extends StatelessWidget {
           ),
         ),
         Container(
-          padding: EdgeInsets.all(10.0),
-          margin: EdgeInsets.all(10.0),
-          height: 190.0,
-          width: 400.0,
+          padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+          margin: EdgeInsets.symmetric(vertical: 9.0, horizontal: 10.0),
+          height: 180.0,
+          width: 330.0,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               color: Colors.white),
           child: Row(children: [
             Container(
-                height: 200.0,
-                child: Text(
-                  'Sales',
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
-            SizedBox(
-              width: 2.0,
-            ),
-            Container(
-                alignment: AlignmentDirectional.topStart,
-                height: 200.0,
-                child: Icon(Icons.arrow_drop_down)),
-            SizedBox(width: 150.0),
-            Container(
+              alignment: AlignmentDirectional.topStart,
               height: 200.0,
-              child: Text(
-                'Select date',
-                style: TextStyle(
-                  color: Colors.blue[600],
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: DropdownButton(
+                  value: selectedValue,
+                  items: [
+                    DropdownMenuItem(
+                      child: Text("Sales"),
+                      value: 1,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("option1"),
+                      value: 2,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("option2"),
+                      value: 3,
+                    ),
+                    DropdownMenuItem(child: Text("Others"), value: 3),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedValue = 1;
+                    });
+                  }),
             ),
+            //child: Container() ,
+            SizedBox(width: 130.0),
+            Container(
+              alignment: AlignmentDirectional.topStart,
+              height: 200.0,
+              child: DropdownButton(
+                  icon: Icon(Icons.arrow_drop_down, color: Colors.indigo[700]),
+                  value: myvalue,
+                  items: [
+                    DropdownMenuItem(
+                      child: Text(
+                        "Select Date",
+                        style: TextStyle(
+                          color: Colors.indigo[700],
+                        ),
+                      ),
+                      value: 1,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("option1"),
+                      value: 2,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("option2"),
+                      value: 3,
+                    ),
+                    DropdownMenuItem(child: Text("Others"), value: 3),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      myvalue = 1;
+                    });
+                  }),
+            ),
+          ]),
+        ),
             SizedBox(
               width: 2.0,
             ),
