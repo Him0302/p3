@@ -34,7 +34,14 @@ class layout extends StatefulWidget {
 
 class _layoutState extends State<layout> {
   int selectedValue = 1;
-  int myvalue = 1;
+  final dateController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed
+    dateController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -89,39 +96,28 @@ class _layoutState extends State<layout> {
               ),
               //child: Container() ,
               SizedBox(width: 130.0),
-              Container(
-                alignment: AlignmentDirectional.topStart,
-                height: 200.0,
-                child: DropdownButton(
-                    icon:
-                        Icon(Icons.arrow_drop_down, color: Colors.indigo[700]),
-                    value: myvalue,
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(
-                          "Select Date",
-                          style: TextStyle(
-                            color: Colors.indigo[700],
-                          ),
-                        ),
-                        value: 1,
+             Container(
+                  height: 200.0,
+                  width: 90.0,
+                  child: TextField(
+                    readOnly: true,
+                    controller: dateController,
+                    decoration: InputDecoration(
+                      hintText: 'Select Date',
+                      hintStyle: TextStyle(
+                        fontSize: 15.5,
+                        color: Colors.indigo[700],
                       ),
-                      DropdownMenuItem(
-                        child: Text("option1"),
-                        value: 2,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("option2"),
-                        value: 3,
-                      ),
-                      DropdownMenuItem(child: Text("Others"), value: 3),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        myvalue = 1;
-                      });
-                    }),
-              ),
+                    ),
+                    onTap: () async {
+                      var date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100));
+                      dateController.text = date.toString().substring(0, 10);
+                    },
+                  )),
             ]),
           ),
         ),
